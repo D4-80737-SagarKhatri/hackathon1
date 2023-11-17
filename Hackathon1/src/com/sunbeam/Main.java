@@ -119,6 +119,14 @@ public class Main {
                     }
                     break;
                 case CreateReview:
+                    try(MoviesDao dao = new MoviesDao()){
+                        List<MoviesPOJO> moviesPOJOList = dao.diplayAllMovies();
+                        System.out.println(moviesPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    System.out.println("Which Movie's Review Do you want to Create?: ");
                     try(ReviewDao dao = new ReviewDao()){
                         dao.createReview(new ReviewsPOJO().accept().setUser_id(u.getId()));
                     }
@@ -144,6 +152,14 @@ public class Main {
                     }
                     break;
                 case DeleteReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     try(ReviewDao dao = new ReviewDao()){
                         List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
                         reviewsPOJOList = dao.displayMyReviews(u.getId());
@@ -184,6 +200,14 @@ public class Main {
                     }
                     break;
                 case ShareReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     try(ShareDao dao=new ShareDao()){
                         dao.shareReview(new SharesPOJO().accept());
                     }catch (Exception e){

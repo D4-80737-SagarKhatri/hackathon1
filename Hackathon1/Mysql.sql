@@ -34,3 +34,11 @@ insert into movies values(default,"naruto",'2000-03-16');
 insert into movies values(default,"jab we met",'2005-08-26');
 insert into movies values(default,"batman dark knights",'2012-08-02');
 insert into movies values(default,"butterfly effect",'2004-02-06');
+
+--delimiter //
+--create trigger shareDelete
+--AFTER DELETE on reviews for each row
+--BEGIN
+--delete from shares where shares.review_id = reviews.id;
+--END //
+--delimiter ;

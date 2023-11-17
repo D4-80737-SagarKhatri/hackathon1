@@ -21,7 +21,7 @@ public class ReviewDao implements AutoCloseable{
         stmtCreateReview = con.
                 prepareStatement("Insert into reviews values(default, ?,?,?,?,?)");
         stmtEditReview = con.prepareStatement("Update reviews set review = ? ,rating = ?, modified = now() where id = ? and user_id = ?");
-        stmtDeleteReview = con.prepareStatement("Delete reviews where id = ? and user_id = ?");
+        stmtDeleteReview = con.prepareStatement("Delete from reviews where id = ? and user_id = ?");
         stmtDisplayAllReview = con.prepareStatement("Select * from reviews");
         stmtDisplayMyReviews = con.prepareStatement("select * from reviews where user_id = ?");
     }
