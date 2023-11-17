@@ -1,5 +1,6 @@
 package com.sunbeam;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -51,7 +52,7 @@ public class Main {
             System.out.println("10. Share a Review");
             System.out.print("Enter Choice: ");
             int temp = sc.nextInt();
-            if(temp < 0 || temp > 2){
+            if(temp < 0 || temp > 9){
                 userChoice = UserMenu.WrongChoice;
             }
             else{
@@ -66,6 +67,13 @@ public class Main {
                 case ChangePassword:
                     break;
                 case DisplayAllMovies:
+                    try(MoviesDao dao = new MoviesDao()){
+                        List<MoviesPOJO> moviesPOJOList = dao.diplayAllMovies();
+                        System.out.println(moviesPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case CreateReview:
                     break;
@@ -89,6 +97,6 @@ public class Main {
         loginChoice();
     }
     public static void main(String[] args) {
-
+        userChoice();
     }
 }

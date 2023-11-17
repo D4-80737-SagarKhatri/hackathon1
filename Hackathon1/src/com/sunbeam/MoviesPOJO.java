@@ -11,7 +11,7 @@ public class MoviesPOJO {
     public MoviesPOJO(int id, String title, Date released) {
         this.id = id;
         this.title = title;
-        this.released = released;
+        this.releaseD = releaseD;
     }
 
     @Override
@@ -19,12 +19,12 @@ public class MoviesPOJO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MoviesPOJO that = (MoviesPOJO) o;
-        return id == that.id && Objects.equals(title, that.title) && Objects.equals(released, that.released);
+        return id == that.id && Objects.equals(title, that.title) && Objects.equals(releaseD, that.releaseD);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, released);
+        return Objects.hash(id, title, releaseD);
     }
 
     @Override
@@ -32,8 +32,8 @@ public class MoviesPOJO {
         final StringBuffer sb = new StringBuffer("MoviesPOJO{");
         sb.append("id=").append(id);
         sb.append(", title='").append(title).append('\'');
-        sb.append(", released=").append(released);
-        sb.append('}');
+        sb.append(", released=").append(releaseD);
+        sb.append("}\n");
         return sb.toString();
     }
 
@@ -54,10 +54,10 @@ public class MoviesPOJO {
     }
 
     public Date getReleased() {
-        return released;
+        return releaseD;
     }
 
-    public void setReleased(Date released) {
-        this.released = released;
+    public void setReleased(Date releaseD) {
+        this.releaseD = releaseD;
     }
 }
