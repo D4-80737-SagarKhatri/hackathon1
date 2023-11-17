@@ -14,3 +14,9 @@ rating int,
 user_id int,
 modified timestamp,
 foreign key (user_id) references users(id));
+
+create table movies(
+     id int primary key,
+    title varchar(40),
+    release Date);
+
