@@ -6,7 +6,7 @@ import java.util.Objects;
 public class MoviesPOJO {
     private int id;
     private String title;
-    java.util.Date released ;
+    java.util.Date releaseD ;
     public MoviesPOJO(){}
     public MoviesPOJO(int id, String title, Date released) {
         this.id = id;
