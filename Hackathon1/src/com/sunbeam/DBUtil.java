@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 
 public class DBUtil {
     private static final String DB_Driver = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/test";
-    private static final String DB_User = "D4_80239_SnehaR";
-    private static final String Pass = "sunbeam";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/hackathon1";
+    private static final String DB_User = "D4_80737_Sagar";
+    private static final String Pass = "Sagar@123";
 
     private static Connection con;
 

@@ -1,9 +1,13 @@
 package com.sunbeam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class UsersPOJO {
+    public static Scanner sc = new Scanner(System.in);
     private int id;
     private String first_name;
     private String last_name;
@@ -106,5 +110,29 @@ public class UsersPOJO {
                 ", mobile='" + mobile + '\'' +
                 ", birth=" + birth +
                 "}\n";
+    }
+
+    public UsersPOJO accept() {
+
+        System.out.println("Enter First Name");
+        this.setFirst_name(sc.next());
+        System.out.println("Enter Last Name");
+        this.setLast_name(sc.next());
+        System.out.println("Enter Email");
+        this.setEmail(sc.next());
+        System.out.println("Enter Password");
+        this.setPassword(sc.next());
+        System.out.println("Enter Mobile Number");
+        this.setMobile(sc.next());
+        System.out.println("Enter Birth Date");
+        String strDate = sc.next();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try{
+            this.setBirth(sdf.parse(strDate));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return this;
     }
 }

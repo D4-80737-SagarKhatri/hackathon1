@@ -9,6 +9,7 @@ public class Main {
         LoginMenu[] arrLogin = LoginMenu.values();
         LoginMenu loginChoice = LoginMenu.EXIT;
         do{
+            UsersPOJO user;
             System.out.println("0. EXIT");
             System.out.println("1. Login");
             System.out.println("2. Signup");
@@ -23,19 +24,46 @@ public class Main {
             switch (loginChoice){
                 case EXIT:
                     System.out.println("Exiting......");
+                    System.exit(0);
                     break;
                 case Login:
+                    try(UsersDao dao = new UsersDao()){
+                        user = new UsersPOJO();
+                        System.out.println("Enter Your Email: ");
+                        user.setEmail(sc.next());
+                        System.out.println("Enter Password: ");
+                        user.setPassword(sc.next());
+                        user = dao.findByMail(user);
+                        if(user == null){
+                            System.out.println("User Not Found...");
+                        }
+                        else{
+                            userChoice(user);
+                        }
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                     break;
                 case Signup:
+                    try(UsersDao dao = new UsersDao()){
+                        UsersPOJO u = new UsersPOJO().accept();
+                        dao.Save(u);
+                        System.out.println("User Added");
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case WrongChoice:
                     System.out.println("Wrong Choice!");
                     break;
             }
-        }while(loginChoice != LoginMenu.WrongChoice);
+        }while(loginChoice != LoginMenu.WrongChoice || loginChoice != LoginMenu.EXIT);
     }
 
-    public static void userChoice(){
+    public static void userChoice(UsersPOJO u){
         UserMenu[] arrUser = UserMenu.values();
         UserMenu userChoice = UserMenu.Logout;
         do{
@@ -63,8 +91,21 @@ public class Main {
                     System.out.println("Logging out.....");
                     break;
                 case EditProfile:
+                    try(UsersDao dao = new UsersDao()){
+                        dao.Profile(u);
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case ChangePassword:
+                    try(UsersDao dao = new UsersDao()){
+                        System.out.println("Enter New Password");
+                        dao.PasswordChange(u.getId(), sc.next());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case DisplayAllMovies:
                     try(MoviesDao dao = new MoviesDao()){
@@ -97,6 +138,6 @@ public class Main {
         loginChoice();
     }
     public static void main(String[] args) {
-        userChoice();
+        loginChoice();
     }
 }
