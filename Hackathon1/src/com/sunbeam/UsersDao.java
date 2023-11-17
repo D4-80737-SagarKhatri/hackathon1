@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UsersDao {
+public class UsersDao implements AutoCloseable {
 
 private  Connection con;
 static PreparedStatement signIn;
@@ -24,7 +24,7 @@ static PreparedStatement changePass;
     public static java.sql.Date convertTOsqlDate(java.util.Date d){
         return new java.sql.Date(d.getTime());
     }
-    public static void Save(UsersPOJO u) throws SQLException //signup
+    public  void Save(UsersPOJO u) throws SQLException //signup
     {
         signUp.setString(1,u.getFirst_name());
         signUp.setString(2,u.getLast_name());
@@ -35,7 +35,7 @@ static PreparedStatement changePass;
         signUp.executeUpdate();
 
     }
-    public static UsersPOJO findByMail(UsersPOJO u) throws SQLException//signin
+    public  UsersPOJO findByMail(UsersPOJO u) throws SQLException//signin
     {
         signIn.setString(1,u.getEmail());
         ResultSet set=signIn.executeQuery();
@@ -58,5 +58,14 @@ static PreparedStatement changePass;
         editProfile.setInt(7,u.getId());
         editProfile.executeUpdate();
     }
-// "update users set first_name=?,last_name=?,email=?,password=?,mobile=?,birth=? where id=?");
+    public static void PasswordChange(int id,String pass) throws SQLException {
+        changePass.setString(1,pass);
+        changePass.setInt(2,id);
+
+    }
+
+    @Override
+    public void close() throws Exception {
+            con.close();
+    }
 }
