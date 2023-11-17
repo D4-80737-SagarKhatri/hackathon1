@@ -11,5 +11,6 @@ public enum UserMenu {
     DisplayAllReviews,
     DisplayMyReviews,
     DisplaySharedReviews,
-    ShareReview;
+    ShareReview,
+    WrongChoice;
 }
