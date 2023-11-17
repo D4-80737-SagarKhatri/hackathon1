@@ -42,3 +42,31 @@ insert into movies values(default,"butterfly effect",'2004-02-06');
 --delete from shares where shares.review_id = reviews.id;
 --END //
 --delimiter ;
+
+ShareReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    try(ShareDao dao=new ShareDao()){
+                        SharesPOJO s=new SharesPOJO();
+                        System.out.println("Enter id of review you want to share");
+                        s.setReviewId(sc.nextInt());
+                        System.out.println("Enter id of the user you want to share the review");
+                        int x=sc.nextInt();
+                        if(x==0){
+                            break;
+                        }
+                        else{
+                            s.setUserId(x);
+                            dao.shareReview(s);
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
