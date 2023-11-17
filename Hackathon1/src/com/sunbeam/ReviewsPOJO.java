@@ -1,9 +1,12 @@
 package com.sunbeam;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class ReviewsPOJO {
+    public static Scanner sc = new Scanner(System.in);
     private int id;
     private int movie_id;
     private String review;
@@ -94,5 +97,16 @@ public class ReviewsPOJO {
                 ", user_id=" + user_id +
                 ", modified=" + modified +
                 "}\n";
+    }
+
+    public ReviewsPOJO accept(){
+        System.out.println("Enter Movie ID:");
+        this.setMovie_id(sc.nextInt());
+        System.out.println("Enter Review: ");
+        this.setReview(sc.next());
+        System.out.println("Enter Rating: ");
+        this.setRating(sc.nextInt());
+        Date dt = new Date();
+        this.setModified(new Timestamp(System.currentTimeMillis()));
     }
 }

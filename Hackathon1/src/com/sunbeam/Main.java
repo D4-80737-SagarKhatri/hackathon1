@@ -117,6 +117,12 @@ public class Main {
                     }
                     break;
                 case CreateReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        dao.createReview(new ReviewsPOJO().)
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case EditReview:
                     break;
