@@ -141,12 +141,22 @@ public class Main {
                         System.out.println(reviewsPOJOList.toString());
                         System.out.println("Select The id of review that you want to edit: ");
                         int id=sc.nextInt();
-                        System.out.println("Enter rating ");
-                        int rating=sc.nextInt();
-                        System.out.println("Enter review");
-                        sc.nextLine();
-                        String review=sc.nextLine();
-                        dao.editReview(id,rating,review, u.getId());
+                        if(reviewsPOJOList.contains(new ReviewsPOJO().setId(id))) {
+                            System.out.println("Enter rating ");
+                            int rating = sc.nextInt();
+                            System.out.println("Enter review");
+                            sc.nextLine();
+                            String review = sc.nextLine();
+                            if (review.trim().length() == 0) {
+                                System.out.println("Review Can't be Empty");
+                                break;
+                            }
+                            dao.editReview(id, rating, review, u.getId());
+                        }
+                        else {
+                            System.out.println("Error You can't Edit This review");
+                            break;
+                        }
                     }
                     catch (Exception e){
                         e.printStackTrace();
@@ -157,16 +167,15 @@ public class Main {
                         List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
                         reviewsPOJOList = dao.displayMyReviews(u.getId());
                         System.out.println(reviewsPOJOList.toString());
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    try(ReviewDao dao = new ReviewDao()){
-                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
-                        reviewsPOJOList = dao.displayMyReviews(u.getId());
-                        System.out.println(reviewsPOJOList.toString());
                         System.out.println("Select The id of review that you want to delete: ");
-                        dao.deleteReview(sc.nextInt(), u.getId());
+                        int x = sc.nextInt();
+                        if (!reviewsPOJOList.contains(new ReviewsPOJO().setId(x))) {
+                            System.out.println("This review does not belong to you");
+                        }
+                        else
+                        {
+                            dao.deleteReview(x, u.getId());
+                        }
                     }
                     catch (Exception e){
                         e.printStackTrace();
@@ -210,7 +219,23 @@ public class Main {
                         e.printStackTrace();
                     }
                     try(ShareDao dao=new ShareDao()){
-                        dao.shareReview(new SharesPOJO().accept());
+                        while(true){
+                            SharesPOJO s=new SharesPOJO();
+                            System.out.println("Enter id of review you want to share");
+                            s.setReviewId(sc.nextInt());
+                            System.out.println("Enter id of the user you want to share the review");
+                            System.out.println("Enter 0 to stop");
+                            int x=sc.nextInt();
+                            if(x==0){
+                                break;
+                            }
+                            else{
+                                s.setUserId(x);
+                                dao.shareReview(s);
+                                System.out.println("Record Added");
+                            }
+                        }
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }

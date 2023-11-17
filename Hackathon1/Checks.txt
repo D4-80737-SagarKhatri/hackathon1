@@ -1,0 +1,9 @@
+1) Inputs not Empty                             DONE
+2) multi-word review                            DONE
+3) edit only your own review                    DONE
+4) share your only review                       DONE
+5) cant share your own review with yourself     DONE
+6) delete only your own review                  DONE
+7) deleting review should delete entry in shares table
+8) date                                         DONE
+9) multiple reviews

@@ -1,9 +1,6 @@
 package com.sunbeam;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +44,13 @@ public class ReviewDao implements AutoCloseable{
     }
 
 
-    public int deleteReview(int id, int uid) throws Exception{
+    public void deleteReview(int id, int uid) throws Exception{
         stmtDeleteReview.setInt(1, id);
         stmtDeleteReview.setInt(2, uid);
-        return stmtDeleteReview.executeUpdate();
+        stmtDeleteReview.executeUpdate();
+        String str = "delete from shares where review_id = " + id;
+        PreparedStatement temp = con.prepareStatement(str);
+        temp.executeUpdate();
     }
 
 

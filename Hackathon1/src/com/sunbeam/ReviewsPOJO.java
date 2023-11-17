@@ -30,8 +30,9 @@ public class ReviewsPOJO {
         return id;
     }
 
-    public void setId(int id) {
+    public ReviewsPOJO setId(int id) {
         this.id = id;
+        return this;
     }
 
     public int getMovie_id() {
@@ -106,9 +107,11 @@ public class ReviewsPOJO {
         System.out.println("Enter Review: ");
         sc.nextLine();
         this.setReview(sc.nextLine());
+        if(review.trim().length() == 0){
+            throw new RuntimeException("Review Can't be Empty");
+        }
         System.out.println("Enter Rating: ");
         this.setRating(sc.nextInt());
-        Date dt = new Date();
         this.setModified(new Timestamp(System.currentTimeMillis()));
         return this;
     }
