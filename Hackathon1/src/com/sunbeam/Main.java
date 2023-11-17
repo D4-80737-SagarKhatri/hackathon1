@@ -144,7 +144,8 @@ public class Main {
                         System.out.println("Enter rating ");
                         int rating=sc.nextInt();
                         System.out.println("Enter review");
-                        String review=sc.next();
+                        sc.nextLine();
+                        String review=sc.nextLine();
                         dao.editReview(id,rating,review, u.getId());
                     }
                     catch (Exception e){

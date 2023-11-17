@@ -104,7 +104,8 @@ public class ReviewsPOJO {
         System.out.println("Enter Movie ID:");
         this.setMovie_id(sc.nextInt());
         System.out.println("Enter Review: ");
-        this.setReview(sc.next());
+        sc.nextLine();
+        this.setReview(sc.nextLine());
         System.out.println("Enter Rating: ");
         this.setRating(sc.nextInt());
         Date dt = new Date();
