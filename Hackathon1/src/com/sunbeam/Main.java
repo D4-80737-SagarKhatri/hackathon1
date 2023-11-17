@@ -82,7 +82,7 @@ public class Main {
             System.out.println("10. Share a Review");
             System.out.print("Enter Choice: ");
             int temp = sc.nextInt();
-            if(temp < 0 || temp > 9){
+            if(temp < 0 || temp > 10){
                 userChoice = UserMenu.WrongChoice;
             }
             else{
@@ -120,26 +120,65 @@ public class Main {
                     break;
                 case CreateReview:
                     try(ReviewDao dao = new ReviewDao()){
-                        dao.createReview(new ReviewsPOJO().)
+                        dao.createReview(new ReviewsPOJO().accept().setUser_id(u.getId()));
                     }
                     catch (Exception e){
                         e.printStackTrace();
                     }
                     break;
                 case EditReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                        System.out.println("Select The id of review that you want to edit: ");
+                        int id=sc.nextInt();
+                        System.out.println("Enter rating ");
+                        int rating=sc.nextInt();
+                        System.out.println("Enter review");
+                        String review=sc.next();
+                        dao.editReview(id,rating,review, u.getId());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case DeleteReview:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                        System.out.println("Select The id of review that you want to delete: ");
+                        dao.deleteReview(sc.nextInt(), u.getId());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case DisplayAllReviews:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayAllReviews();
+                        System.out.println(reviewsPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case DisplayMyReviews:
+                    try(ReviewDao dao = new ReviewDao()){
+                        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+                        reviewsPOJOList = dao.displayMyReviews(u.getId());
+                        System.out.println(reviewsPOJOList.toString());
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case DisplaySharedReviews:
                     try(ShareDao dao=new ShareDao()){
                         list=dao.DisplayReviewsSharedWithMe(u.getId());
-                        for (ReviewsPOJO r1: list) {
-                            r1.toString();
-                        }
+                        System.out.println(list.toString());
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -150,7 +189,6 @@ public class Main {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                    break;
                     break;
                 case WrongChoice:
                     System.out.println("Wrong Choice");

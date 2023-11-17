@@ -2,6 +2,10 @@ package com.sunbeam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDao implements AutoCloseable{
     private Connection con;
@@ -16,33 +20,72 @@ public class ReviewDao implements AutoCloseable{
 
         stmtCreateReview = con.
                 prepareStatement("Insert into reviews values(default, ?,?,?,?,?)");
-        stmtEditReview = con.prepareStatement("Update reviews set review = ? rating = ? modified = now()");
-        stmtDeleteReview = con.prepareStatement("Delete reviews where id = ?");
+        stmtEditReview = con.prepareStatement("Update reviews set review = ? ,rating = ?, modified = now() where id = ? and user_id = ?");
+        stmtDeleteReview = con.prepareStatement("Delete reviews where id = ? and user_id = ?");
         stmtDisplayAllReview = con.prepareStatement("Select * from reviews");
-        stmtDisplayMyReviews = con.prepareStatement("select * from reviews where user_ id = ?");
+        stmtDisplayMyReviews = con.prepareStatement("select * from reviews where user_id = ?");
     }
 
-    public int createReview(ReviewsPOJO r) throws Exception{
+
+
+//    Insert into reviews values(default, ?,?,?,?,?)
+    public void createReview(ReviewsPOJO r) throws Exception{
         stmtCreateReview.setInt(1, r.getMovie_id());
         stmtCreateReview.setString(2, r.getReview());
         stmtCreateReview.setInt(3, r.getRating());
         stmtCreateReview.setInt(4, r.getUser_id());
         stmtCreateReview.setTimestamp(5, r.getModified());
-        return stmtCreateReview.executeUpdate();
+        stmtCreateReview.executeUpdate();
     }
 
-    public void editReview(){
-
+    public void editReview(int id,int rating,String review ,int uid) throws SQLException {
+        stmtEditReview.setString(1,review);
+        stmtEditReview.setInt(2,rating);
+        stmtEditReview.setInt(3,id);
+        stmtEditReview.setInt(4,uid);
+        stmtEditReview.executeUpdate();
     }
 
 
-    public void deleteReview(){}
+    public int deleteReview(int id, int uid) throws Exception{
+        stmtDeleteReview.setInt(1, id);
+        stmtDeleteReview.setInt(2, uid);
+        return stmtDeleteReview.executeUpdate();
+    }
 
 
-    public void displayAllReviews(){}
+    public List<ReviewsPOJO> displayAllReviews() throws Exception{
+        ResultSet rs = stmtDisplayAllReview.executeQuery();
+        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+        while(rs.next()){
+            ReviewsPOJO temp = new ReviewsPOJO();
+            temp.setId(rs.getInt("id"));
+            temp.setMovie_id(rs.getInt("movie_id"));
+            temp.setReview(rs.getString("review"));
+            temp.setUser_id(rs.getInt("user_id"));
+            temp.setModified(rs.getTimestamp("modified"));
+            temp.setRating(rs.getInt("rating"));
+            reviewsPOJOList.add(temp);
+        }
+        return reviewsPOJOList;
+    }
 
 
-    public void displayMyReviews(){}
+    public List<ReviewsPOJO> displayMyReviews(int id) throws Exception{
+        List<ReviewsPOJO> reviewsPOJOList = new ArrayList<>();
+        stmtDisplayMyReviews.setInt(1, id);
+        ResultSet rs = stmtDisplayMyReviews.executeQuery();
+        while(rs.next()){
+            ReviewsPOJO temp = new ReviewsPOJO();
+            temp.setId(rs.getInt("id"));
+            temp.setMovie_id(rs.getInt("movie_id"));
+            temp.setReview(rs.getString("review"));
+            temp.setUser_id(rs.getInt("user_id"));
+            temp.setModified(rs.getTimestamp("modified"));
+            reviewsPOJOList.add(temp);
+        }
+        return reviewsPOJOList;
+    }
 
     @Override
     public void close() throws Exception {

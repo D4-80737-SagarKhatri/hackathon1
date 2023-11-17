@@ -31,7 +31,7 @@ public class SharesPOJO {
         System.out.println("Enter id of review you want to share");
         this.reviewId=sc.nextInt();
         System.out.println("Enter id of the user you want to share the review");
-        this.reviewId=sc.nextInt();
+        this.userId=sc.nextInt();
         return this;
     }
 }

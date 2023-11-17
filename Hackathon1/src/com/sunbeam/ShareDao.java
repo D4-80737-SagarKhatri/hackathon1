@@ -19,7 +19,7 @@ public class ShareDao implements AutoCloseable{
     public ShareDao() throws Exception {
         con= DBUtil.getCon();
         displaySharedWithMe=con.prepareStatement("select * from reviews where id=(select review_id from shares where user_id=?)");
-        shareReview=con.prepareStatement("insert into reviews values(?,?)");
+        shareReview=con.prepareStatement("insert into shares values(?,?)");
     }
 
     public ArrayList<ReviewsPOJO> DisplayReviewsSharedWithMe(int id) throws SQLException

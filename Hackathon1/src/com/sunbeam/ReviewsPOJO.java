@@ -62,8 +62,9 @@ public class ReviewsPOJO {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public ReviewsPOJO setUser_id(int user_id) {
         this.user_id = user_id;
+        return this;
     }
 
     public Timestamp getModified() {
@@ -108,5 +109,6 @@ public class ReviewsPOJO {
         this.setRating(sc.nextInt());
         Date dt = new Date();
         this.setModified(new Timestamp(System.currentTimeMillis()));
+        return this;
     }
 }
