@@ -1,5 +1,6 @@
 package com.sunbeam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,6 +67,7 @@ public class Main {
     public static void userChoice(UsersPOJO u){
         UserMenu[] arrUser = UserMenu.values();
         UserMenu userChoice = UserMenu.Logout;
+        List<ReviewsPOJO> list = new ArrayList<>();
         do{
             System.out.println("0. Logout");
             System.out.println("1. Edit Profile");
@@ -133,8 +135,22 @@ public class Main {
                 case DisplayMyReviews:
                     break;
                 case DisplaySharedReviews:
+                    try(ShareDao dao=new ShareDao()){
+                        list=dao.DisplayReviewsSharedWithMe(u.getId());
+                        for (ReviewsPOJO r1: list) {
+                            r1.toString();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
                 case ShareReview:
+                    try(ShareDao dao=new ShareDao()){
+                        dao.shareReview(new SharesPOJO().accept());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    break;
                     break;
                 case WrongChoice:
                     System.out.println("Wrong Choice");

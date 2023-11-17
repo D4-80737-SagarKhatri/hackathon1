@@ -34,22 +34,3 @@ insert into movies values(default,"naruto",'2000-03-16');
 insert into movies values(default,"jab we met",'2005-08-26');
 insert into movies values(default,"batman dark knights",'2012-08-02');
 insert into movies values(default,"butterfly effect",'2004-02-06');
-
-
-case DisplaySharedReviews:
-                    try(ShareDao dao=new ShareDao()){
-                        list=dao.DisplayReviewsSharedWithMe(u.getId());
-                        for (ReviewsPOJO r1: list) {
-                            r1.toString();
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
-                case ShareReview:
-                    try(ShareDao dao=new ShareDao()){
-                        dao.shareReview(new SharesPOJO().accept());
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    break;
