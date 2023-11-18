@@ -219,10 +219,10 @@ public class Main {
                         e.printStackTrace();
                     }
                     try(ShareDao dao=new ShareDao()){
+                        SharesPOJO s=new SharesPOJO();
+                        System.out.println("Enter id of review you want to share");
+                        s.setReviewId(sc.nextInt());
                         while(true){
-                            SharesPOJO s=new SharesPOJO();
-                            System.out.println("Enter id of review you want to share");
-                            s.setReviewId(sc.nextInt());
                             System.out.println("Enter id of the user you want to share the review");
                             System.out.println("Enter 0 to stop");
                             int x=sc.nextInt();

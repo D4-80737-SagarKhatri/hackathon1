@@ -82,6 +82,7 @@ public class ReviewDao implements AutoCloseable{
             temp.setReview(rs.getString("review"));
             temp.setUser_id(rs.getInt("user_id"));
             temp.setModified(rs.getTimestamp("modified"));
+            temp.setRating(rs.getInt("rating"));
             reviewsPOJOList.add(temp);
         }
         return reviewsPOJOList;
